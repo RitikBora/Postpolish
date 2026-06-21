@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bold for LinkedIn — Format Posts with Bold, Italic, Lists",
+  title: "PostPolish — Format, Preview, and Perfect Your LinkedIn Posts",
   description:
-    "Bold, italic, lists, and live preview for LinkedIn posts. No signup, no BS.",
+    "Bold, italic, lists, and live preview for LinkedIn posts. No signup, no tracking.",
 };
 
 export default function RootLayout({
