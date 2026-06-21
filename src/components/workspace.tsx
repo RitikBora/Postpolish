@@ -8,7 +8,6 @@ import { Check, Copy, Eye, Pencil } from "lucide-react";
 import { type EditorView } from "prosemirror-view";
 import { useState } from "react";
 
-import { EditorBubbleMenu } from "@/components/editor/editor-bubble-menu";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
 import { PreviewCard } from "@/components/preview/preview-card";
 import { Button } from "@/components/ui/button";
@@ -125,7 +124,7 @@ export function Workspace() {
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-10 md:px-6">
       <section
         aria-label="Post composer"
-        className="from-card to-card/50 shadow-foreground/5 flex flex-1 flex-col overflow-hidden rounded-xl border border-border/40 bg-gradient-to-b shadow-xl backdrop-blur-sm"
+        className="from-card to-card/50 shadow-foreground/5 flex h-[520px] flex-col overflow-hidden rounded-xl border border-border/40 bg-gradient-to-b shadow-xl backdrop-blur-sm"
       >
         {/* Tab bar */}
         <div
@@ -150,18 +149,28 @@ export function Workspace() {
           />
         </div>
 
-        {/* Toolbar (edit only) */}
+        {/* Toolbar (edit only). The section's fixed height keeps the card
+            from resizing when the toolbar disappears. */}
         {view === "edit" && <EditorToolbar editor={editor} />}
-        <EditorBubbleMenu editor={editor} />
 
-        {/* Content — keep both mounted so editor state survives switching */}
+        {/* Content — keep both mounted so editor state survives switching.
+            Both wrappers are identical (h-full + overflow-y-auto) so the
+            workspace card keeps its size when toggling tabs. */}
         <div className="flex-1 overflow-hidden">
-          <div className={cn("h-full", view === "edit" ? "" : "hidden")}>
-            <div className="h-full overflow-y-auto">
-              <EditorContent editor={editor} />
-            </div>
+          <div
+            className={cn(
+              "h-full overflow-y-auto",
+              view === "edit" ? "" : "hidden"
+            )}
+          >
+            <EditorContent editor={editor} />
           </div>
-          <div className={cn("h-full", view === "preview" ? "" : "hidden")}>
+          <div
+            className={cn(
+              "h-full overflow-y-auto",
+              view === "preview" ? "" : "hidden"
+            )}
+          >
             <PreviewCard editor={editor} />
           </div>
         </div>
