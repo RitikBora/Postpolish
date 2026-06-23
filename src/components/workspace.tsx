@@ -4,9 +4,11 @@ import CharacterCount from "@tiptap/extension-character-count";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Check, Copy, Eye, Pencil } from "lucide-react";
+import { Copy, Eye, Pencil } from "lucide-react";
+import { motion } from "motion/react";
 import { type EditorView } from "prosemirror-view";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
 import { PreviewCard } from "@/components/preview/preview-card";
@@ -15,8 +17,6 @@ import { useSerializedPost } from "@/hooks/use-serialized-post";
 import { CHAR_LIMIT, CHAR_WARN_AT } from "@/lib/linkedin";
 import { cn } from "@/lib/utils";
 import { serialize, type DocNode } from "@/lib/unicode";
-
-const COPIED_FLASH_MS = 1500;
 
 type View = "edit" | "preview";
 
@@ -46,14 +46,24 @@ function TabButton({ isActive, onClick, icon, label }: TabButtonProps) {
       aria-selected={isActive}
       onClick={onClick}
       className={cn(
-        "relative inline-flex items-center gap-1.5 border-b-2 px-4 py-2.5 text-sm font-medium",
+        "relative inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium transition-colors",
         isActive
-          ? "border-primary text-foreground"
-          : "border-transparent text-muted-foreground hover:text-foreground"
+          ? "text-foreground"
+          : "text-muted-foreground hover:text-foreground"
       )}
     >
       {icon}
       {label}
+      {isActive && (
+        // Shared layoutId — motion slides the underline between tabs instead
+        // of re-mounting it. Spring tuning per motion.dev recommendations.
+        <motion.span
+          aria-hidden
+          layoutId="workspace-tab-underline"
+          className="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-primary"
+          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+        />
+      )}
     </button>
   );
 }
@@ -104,16 +114,24 @@ export function Workspace() {
 
   const [view, setView] = useState<View>("edit");
   const { unicode, charCount } = useSerializedPost(editor);
-  const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     if (!unicode) return;
     try {
       await navigator.clipboard.writeText(unicode);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), COPIED_FLASH_MS);
+      toast.success("Copied to clipboard", {
+        description: " ",
+        classNames: {
+        toast: "!border-primary/50",
+        title: "!text-primary",
+        description: "!text-primary/70",
+        icon: "!text-primary",
+      },
+      });
     } catch {
-      // Clipboard write can reject in non-secure contexts; silent fallback.
+      toast.error("Couldn't copy", {
+        description: "Your browser blocked clipboard access.",
+      });
     }
   };
 
@@ -196,23 +214,13 @@ export function Workspace() {
             <Button
               type="button"
               size="sm"
-              variant={copied ? "secondary" : "default"}
               onClick={handleCopy}
               disabled={!unicode}
-              className="gap-1.5"
+              className="gap-1.5 transition-transform duration-150 ease-out hover:scale-101 active:scale-98"
             >
-              {copied ? (
-                <>
-                  <Check />
-                  Copied
-                </>
-              ) : (
-                <>
-                  <Copy />
-                  <span className="hidden sm:inline">Copy for LinkedIn</span>
-                  <span className="sm:hidden">Copy</span>
-                </>
-              )}
+              <Copy />
+              <span className="hidden sm:inline">Copy for LinkedIn</span>
+              <span className="sm:hidden">Copy</span>
             </Button>
           </div>
         </div>

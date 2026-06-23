@@ -74,7 +74,7 @@ export function PreviewCard({ editor }: PreviewCardProps) {
   return (
     <div className="w-full px-4 py-3 text-[15px] leading-relaxed">
       {isEmpty ? (
-        <p className="italic text-muted-foreground/70">
+        <p className="italic text-muted-foreground/70 pt-5">
           your post preview will appear here…
         </p>
       ) : (
