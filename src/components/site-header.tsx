@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+  import Image from "next/image"
 
 export function SiteHeader() {
   return (
@@ -9,10 +10,10 @@ export function SiteHeader() {
         <a
           href="/"
           aria-label="PostPolish home"
-          className="group flex items-center gap-2.5"
+          className="group flex items-center gap-1"
         >
-          <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm shadow-primary/30 transition-transform group-hover:scale-105 group-hover:rotate-12">
-            <Sparkles className="size-3.5" strokeWidth={2.25} />
+          <span className="flex size-7 items-center justify-center rounded-md  text-primary-foreground transition-transform group-hover:scale-105 group-hover:rotate-12">
+              <Image src="/polish.png" alt="" width={14} height={14} className="size-5" />
           </span>
           <span className="text-[15px] font-semibold leading-none tracking-tight text-foreground">
             PostPolish

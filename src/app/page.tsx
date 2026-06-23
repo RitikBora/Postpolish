@@ -5,7 +5,7 @@ import { Workspace } from "@/components/workspace";
 
 export default function Home() {
   return (
-    <div className="relative isolate flex min-h-screen flex-col bg-background">
+    <div className="relative isolate flex min-h-screen flex-col overflow-x-clip bg-background">
       <SiteHeader />
       <Hero />
       <Workspace />

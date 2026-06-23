@@ -209,7 +209,8 @@ export function Workspace() {
               ) : (
                 <>
                   <Copy />
-                  Copy for LinkedIn
+                  <span className="hidden sm:inline">Copy for LinkedIn</span>
+                  <span className="sm:hidden">Copy</span>
                 </>
               )}
             </Button>

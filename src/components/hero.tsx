@@ -38,7 +38,7 @@ export function Hero() {
             className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:mt-7 md:text-lg"
           >
             Turn plain text into clean, engaging LinkedIn posts with rich
-            formatting and a real-time preview.
+            formatting
           </motion.p>
         </div>
       </div>
