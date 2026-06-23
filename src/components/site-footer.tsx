@@ -1,4 +1,7 @@
 import { Globe, Heart } from "lucide-react";
+import Image from "next/image";
+
+import { CoffeeDialog } from "@/components/coffee-dialog";
 
 interface SocialLinkProps {
   href: string;
@@ -65,14 +68,36 @@ export function SiteFooter() {
   return (
     <footer className="mt-12 border-t border-border/40">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-4 py-6 md:flex-row md:px-6">
-        <p className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-          Made with{" "}
-          <Heart
-            className="size-3.5 fill-primary text-primary"
-            strokeWidth={0}
-          />{" "}
-          in India
-        </p>
+        <div className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5">
+            Made with{" "}
+            <Heart
+              className="size-3.5 fill-primary text-primary"
+              strokeWidth={0}
+            />{" "}
+            in India
+          </span>
+          <span aria-hidden className="text-muted-foreground/50">
+            ·
+          </span>
+          <CoffeeDialog
+            trigger={
+              <button
+                type="button"
+                aria-label="Buy me a coffee"
+                className="inline-flex items-center transition-transform duration-200 hover:rotate-12"
+              >
+                <Image
+                  src="/coffee.png"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="size-[18px]"
+                />
+              </button>
+            }
+          />
+        </div>
         <div className="flex items-center gap-1">
           <SocialLink
             href="https://www.linkedin.com/in/ritikbora/"

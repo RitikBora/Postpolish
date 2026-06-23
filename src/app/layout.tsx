@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -42,6 +43,24 @@ export default function RootLayout({
           {children}
           <Toaster />
         </ThemeProvider>
+        {/* Buy Me a Coffee floating widget — second tip pathway alongside
+            the custom CoffeeDialog. Loads lazily so it doesn't block first
+            paint. data-color tinted to roughly match the theme primary
+            instead of BMC's default yellow. */}
+        <Script
+          id="bmc-widget"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+          strategy="lazyOnload"
+          data-name="BMC-Widget"
+          data-cfasync="false"
+          data-id="ritikbora"
+          data-description="Support PostPolish on Buy Me a Coffee"
+          data-message=""
+          data-color="#1DA1F2"
+          data-position="Right"
+          data-x_margin="18"
+          data-y_margin="18"
+        />
       </body>
     </html>
   );
