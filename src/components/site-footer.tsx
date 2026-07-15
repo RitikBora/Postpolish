@@ -6,17 +6,19 @@ import { CoffeeDialog } from "@/components/coffee-dialog";
 interface SocialLinkProps {
   href: string;
   label: string;
+  /** Tailwind hover text-color class carrying the platform's brand color. */
+  hoverColor: string;
   children: React.ReactNode;
 }
 
-function SocialLink({ href, label, children }: SocialLinkProps) {
+function SocialLink({ href, label, hoverColor, children }: SocialLinkProps) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+      className={`inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors ${hoverColor}`}
     >
       {children}
     </a>
@@ -75,7 +77,7 @@ export function SiteFooter() {
               className="size-3.5 fill-primary text-primary"
               strokeWidth={0}
             />{" "}
-            in India
+            by Ritik
           </span>
           <span aria-hidden className="text-muted-foreground/50">
             ·
@@ -102,19 +104,29 @@ export function SiteFooter() {
           <SocialLink
             href="https://www.linkedin.com/in/ritikbora/"
             label="LinkedIn"
+            hoverColor="hover:text-[#0A66C2]"
           >
             <LinkedinIcon />
           </SocialLink>
           <SocialLink
             href="https://twitter.com/RitikBora11"
             label="Twitter / X"
+            hoverColor="hover:text-black dark:hover:text-white"
           >
             <TwitterIcon />
           </SocialLink>
-          <SocialLink href="https://github.com/RitikBora" label="GitHub">
+          <SocialLink
+            href="https://github.com/RitikBora"
+            label="GitHub"
+            hoverColor="hover:text-[#181717] dark:hover:text-white"
+          >
             <GithubIcon />
           </SocialLink>
-          <SocialLink href="https://ritikbora.dev" label="Website">
+          <SocialLink
+            href="https://ritikbora.dev"
+            label="Website"
+            hoverColor="hover:text-primary"
+          >
             <Globe className="size-4" />
           </SocialLink>
         </div>
