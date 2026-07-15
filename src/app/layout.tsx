@@ -37,8 +37,8 @@ export default function RootLayout({
       <body className="bg-background text-foreground font-sans min-h-screen">
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
         >
           {children}
           <Toaster />
